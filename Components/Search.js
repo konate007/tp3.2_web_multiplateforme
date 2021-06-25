@@ -1,19 +1,20 @@
 import { View, TextInput, Button, StyleSheet, FlatList, Text, ActivityIndicator, keyExtractor} from "react-native";
 import React from 'react';
-import films from '../Helpers/filmsData'
+//import films from '../Helpers/filmsData'
 import FilmItem from './FilmItem'
+import films from '../Helpers/filmsData'
 import { getFilmsFromApiWithSearchedText } from '../API/TMDBApi'
 class Search  extends React.Component{
 
     constructor(props) {
         super(props)
+        this.searchedText = ""
+        this.page = 0 
+        this.totalPages = 0 
         this.state = {
             films: [],
-            isLoading: false //Par défaut à false car il n'y a pas de chargement tant qu'on ne lance pas de recherche
+            isLoading: false 
         }
-        this.searchedText = ""
-        this.page = 0 // Compteur pour connaître la page courante
-        this.totalPages = 0 // Nombre de pages totales pour savoir si on a atteint la fin des 
         this._loadFilms = this._loadFilms.bind(this)
     }
 
@@ -22,11 +23,10 @@ class Search  extends React.Component{
         this.page = 0
         this.totalPages = 0
         this.setState({
-        films: []
+        films: [],
+        }, () => {
+            this._loadFilms()
         })
-        // J'utilise le paramètre length sur mon tableau de films pour vérifier qu'il y a bien 0 film
-        //console.log("Page : " + this.page + " / TotalPages : " + this.totalPages + " / Nombre de films : " + this.state.films.length)
-        this._loadFilms()
     }
 
     _loadFilms() {
@@ -38,9 +38,7 @@ class Search  extends React.Component{
                 this.setState({
                     films: [ ...this.state.films, ...data.results ],
                     isLoading: false //Arret du chargement
-                  }) 
-                this.forceUpdate()
-                
+                  })                 
             })
         }
     }
@@ -53,29 +51,23 @@ class Search  extends React.Component{
         if (this.state.isLoading) {
           return (
             <View style={styles.loading_container}>
-              <ActivityIndicator size='large' />
-              {/* Le component ActivityIndicator possède
-              une propriété size pour définir la taille du
-              visuel de chargement : small ou large.
-              Par défaut size vaut small, on met donc large
-              pour que le chargement soit bien visible */}
+              <ActivityIndicator size='large'/>
             </View>
           )
         }
       }
 
     _displayDetailForFilm = (idFilm)=>{
-        console.log(idFilm)
+        //console.log("Display film with id " +idFilm)
         this.props.navigation.navigate("FilmDetail", {idFilm: idFilm})
     }
 
       
     render(){
-        //console.log(this.state.isLoading)
         return(
             <View>
                 <TextInput onChangeText={(text) => this._searchTextInputChanged(text)}
-                 style={styles.textinput} placeholder="Titre du film"
+                 style={styles.textinput} placeholder="Titre du film (ex: war)"
                  onSubmitEditing={() => this._loadFilms()}/>
                 <Button title="Rechercher" onPress={() => this._searchFilms()}/>
                 <FlatList

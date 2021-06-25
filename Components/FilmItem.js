@@ -7,10 +7,10 @@ import { getImageFromApi } from '../API/TMDBApi'
 class FilmItem extends React.Component {
 
   render() {
-    //const film = this.props.film
-    //const displayDetailForFilm = this.props.displayDetailForFilm
+    const film = this.props.film
+    const displayDetailForFilm = this.props.displayDetailForFilm
     //Les deux declarations de constantes precedentes sont equivalentes a
-    const { film, displayDetailForFilm}= this.props ;
+    //const { film, displayDetailForFilm}= this.props ;
     return (
       <TouchableOpacity
         onPress = {() => displayDetailForFilm(film.id)} 

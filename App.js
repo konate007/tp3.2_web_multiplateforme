@@ -3,10 +3,17 @@ import { StyleSheet, Text, View, TextInput,ToolbarAndroid, TouchableOpacity,} fr
 import Search from './Components/Search';
 import Navigation from './Navigation/Navigation'
 
-export default function App() {
-  return (
+import { Provider } from 'react-redux'
+import Store from './Store/configureStore'
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <Provider store={Store}>
         <Navigation/>
-  );
+      </Provider>
+    )
+  }
 }
 
 const styles = StyleSheet.create({

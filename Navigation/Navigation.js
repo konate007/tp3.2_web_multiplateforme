@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Search from '../Components/Search';
 import FilmDetail from '../Components/FilmDetail';
+import Test from '../Components/Test'
 
 
 const Stack = createStackNavigator();
@@ -17,6 +18,11 @@ function Navigation(){
           <Stack.Screen
           name="FilmDetail"
           component={FilmDetail}
+          />
+
+          <Stack.Screen
+          name="Test"
+          component={Test}
           />
         </Stack.Navigator>
       </NavigationContainer>
